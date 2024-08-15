@@ -1,0 +1,27 @@
+import express, { Request, Response } from "express"
+import cors from "cors"
+import "dotenv/config"
+import mongoose from "mongoose"
+import myUserRoute from "./routes/MyUserRoute"
+
+mongoose
+  .connect(process.env.MONGO_CONNECTION_STRING as string, {
+    dbName: "mern-food-ordering-app",
+  })
+  .then(() => console.log("Database Connected Successfully"))
+  .catch((e) => console.log(`Error while database connection :${e}`))
+
+const app = express()
+
+app.use(express.json())
+app.use(cors())
+
+app.get("/helth", async (req:Request, res:Response) => {
+  res.send({ message: "helth Ok !" })
+})
+
+app.use("/api/my/user", myUserRoute)
+
+app.listen(7000, () => {
+  console.log(`Server is Working on http://localhost:7000`)
+})
