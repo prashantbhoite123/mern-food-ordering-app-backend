@@ -4,6 +4,8 @@ import "dotenv/config"
 import mongoose from "mongoose"
 import myUserRoute from "./routes/MyUserRoute"
 
+import { v2 as cloudinary } from "cloudinary"
+
 mongoose
   .connect(process.env.MONGO_CONNECTION_STRING as string, {
     dbName: "mern-food-ordering-app",
@@ -11,12 +13,18 @@ mongoose
   .then(() => console.log("Database Connected Successfully"))
   .catch((e) => console.log(`Error while database connection :${e}`))
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
 const app = express()
 
 app.use(express.json())
 app.use(cors())
 
-app.get("/helth", async (req:Request, res:Response) => {
+app.get("/helth", async (req: Request, res: Response) => {
   res.send({ message: "helth Ok !" })
 })
 
