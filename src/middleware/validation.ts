@@ -23,3 +23,26 @@ export const validateMyUserRequest = [
   body("country").isString().notEmpty().withMessage("Country must be a string"),
   handelValdationErrors,
 ]
+
+export const validateMyRestaurantRequest = [
+  body("restaurantName").notEmpty().withMessage("Restaurant name is required"),
+  body("city").notEmpty().withMessage("City name is required"),
+  body("country").notEmpty().withMessage("Country name is required"),
+  body("deliveryPrice")
+    .isFloat({ min: 0 })
+    .withMessage("Delivary price must be a positive number"),
+  body("estimatedDeliveryTime")
+    .isInt({ min: 0 })
+    .withMessage("EstimatedDelivery time must be a positive integar"),
+  body("cuisines")
+    .isArray()
+    .withMessage("Cuisines must be an array")
+    .not()
+    .isEmpty()
+    .withMessage("Cuisines array cannot be empty"),
+  body("menuItems").isArray().withMessage("Menu items must be an array"),
+  body("meniItems.*.name")
+    .isFloat({ min: 0 })
+    .withMessage("Menu Item name is required"),
+  handelValdationErrors,
+]

@@ -29,7 +29,6 @@ const createMyRestaturant = async (req: Request, res: Response) => {
     await restaurant.save()
 
     res.status(200).json(restaurant)
-    
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: "Something went wrong" })
