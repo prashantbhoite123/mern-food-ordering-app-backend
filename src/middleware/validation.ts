@@ -40,8 +40,8 @@ export const validateMyRestaurantRequest = [
     .not()
     .isEmpty()
     .withMessage("Cuisines array cannot be empty"),
-  body("menuItems").isArray().withMessage("Menu items must be an array"),
-  body("meniItems.*.name")
+  body("menuItem").isArray().withMessage("Menu items must be an array"),
+  body("meniItem.*.name")
     .isFloat({ min: 0 })
     .withMessage("Menu Item name is required"),
   handelValdationErrors,

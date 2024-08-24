@@ -6,13 +6,16 @@ import mongoose from "mongoose"
 const createMyRestaturant = async (req: Request, res: Response) => {
   try {
     const existingRestaurant = await Restaurant.findOne({ user: req.userId })
+   
+    console.log(req.body)
+
     if (existingRestaurant) {
       return res.status(409).json({ message: "User Restaurant already exist" })
     }
 
     const image = req.file as Express.Multer.File
 
-    const base64Image = Buffer.from(image.buffer).toString("base64")
+    const base64Image = Buffer.from(image.  buffer).toString("base64")
 
     const dataURI = `data:${image.mimetype};base64,${base64Image}`
 
@@ -27,6 +30,7 @@ const createMyRestaturant = async (req: Request, res: Response) => {
     restaurant.lastUpdated = new Date()
 
     await restaurant.save()
+    console.log("This is a reastaurant  :", restaurant)
 
     res.status(200).json(restaurant)
   } catch (error) {
