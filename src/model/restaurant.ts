@@ -30,7 +30,7 @@ const resturantSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  deleveryPrice: {
+  deliveryPrice: {
     type: Number,
     required: true,
   },

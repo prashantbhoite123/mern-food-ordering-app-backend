@@ -5,6 +5,7 @@ import mongoose from "mongoose"
 import myUserRoute from "./routes/MyUserRoute"
 import myRestaurantRoute from "./routes/MyRestaurantRoute"
 import { v2 as cloudinary } from "cloudinary"
+import bodyParser from "body-parser"
 
 mongoose
   .connect(process.env.MONGO_CONNECTION_STRING as string, {
@@ -22,6 +23,7 @@ cloudinary.config({
 const app = express()
 
 app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
 app.get("/helth", async (req: Request, res: Response) => {

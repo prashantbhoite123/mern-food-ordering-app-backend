@@ -16,14 +16,14 @@ const upload = multer({
 
 // /api/my/resturant
 
-// router.post(
-//   "/",
-//   validateMyRestaurantRequest,
-//   jwtCheck,
-//   jwtParse,
-//   upload.single("imageFile"),
-//   MyRestaurantController.createMyRestaturant
-// )
+router.post(
+  "/",
 
-router.post("/", MyRestaurantController.createMyRestaturant)
+  jwtCheck,
+  jwtParse,
+  upload.single("imageFile"),
+  MyRestaurantController.createMyRestaturant
+)
+
+// router.post("/", MyRestaurantController.createMyRestaturant)
 export default router
