@@ -16,6 +16,8 @@ const upload = multer({
 
 // /api/my/resturant
 
+router.get("/", jwtCheck, jwtParse, MyRestaurantController.getRestaurant)
+
 router.post(
   "/",
 

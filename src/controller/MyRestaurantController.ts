@@ -3,11 +3,22 @@ import { Restaurant } from "../model/restaurant"
 import cloudinary from "cloudinary"
 import mongoose from "mongoose"
 
+const getRestaurant = async (req: Request, res: Response) => {
+  try {
+    const restaurant = await Restaurant.findOne({ user: req.userId })
+
+    if (!restaurant) {
+      return res.status(404).json({ message: "restaurant not found" })
+    }
+
+    res.json(restaurant)
+  } catch (error) {
+    console.log(`Error While getRestaurant Api :${error}`)
+  }
+}
+
 const createMyRestaturant = async (req: Request, res: Response) => {
   try {
-    console.log(`=========================================`)
-    console.log(`Restaurant : `, req.body)
-    console.log(`=========================================`)
     const existingRestaurant = await Restaurant.findOne({ user: req.userId })
 
     if (existingRestaurant) {
@@ -43,12 +54,12 @@ const uploadImage = async (file: Express.Multer.File) => {
   const dataURI = `data:${image.mimetype};base64,${base64Image}`
 
   const uploadResponse = await cloudinary.v2.uploader.upload(dataURI)
-  console.log(uploadResponse)
 
-  console.log(uploadResponse.url)
   return uploadResponse.url
 }
 
 export default {
   createMyRestaturant,
+
+  getRestaurant,
 }
