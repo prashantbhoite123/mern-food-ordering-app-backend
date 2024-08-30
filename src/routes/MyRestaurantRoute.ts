@@ -20,12 +20,23 @@ router.get("/", jwtCheck, jwtParse, MyRestaurantController.getRestaurant)
 
 router.post(
   "/",
-
+  upload.single("imageFile"),
+  validateMyRestaurantRequest,
   jwtCheck,
   jwtParse,
-  upload.single("imageFile"),
   MyRestaurantController.createMyRestaturant
 )
 
-// router.post("/", MyRestaurantController.createMyRestaturant)
+router.put(
+  "/",
+  upload.single("imageFile"),
+  validateMyRestaurantRequest,
+  jwtCheck,
+  jwtParse,
+  MyRestaurantController.updateMyRestaurant
+)
+
+
+
+
 export default router
