@@ -11,7 +11,8 @@ const getRestaurant = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "restaurant not found" })
     }
 
-    res.json(restaurant)
+    // console.log("restaurant :", restaurant)
+    return res.json(restaurant)
   } catch (error) {
     console.log(`Error While getRestaurant Api :${error}`)
   }
@@ -60,6 +61,5 @@ const uploadImage = async (file: Express.Multer.File) => {
 
 export default {
   createMyRestaturant,
-
   getRestaurant,
 }
