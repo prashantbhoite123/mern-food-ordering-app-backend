@@ -30,9 +30,9 @@ router.post(
 router.put(
   "/",
   upload.single("imageFile"),
+  // validateMyRestaurantRequest,
   jwtCheck,
   jwtParse,
-  validateMyRestaurantRequest,
   MyRestaurantController.updateMyRestaurant
 )
 
