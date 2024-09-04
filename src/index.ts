@@ -4,6 +4,7 @@ import "dotenv/config"
 import mongoose from "mongoose"
 import myUserRoute from "./routes/MyUserRoute"
 import myRestaurantRoute from "./routes/MyRestaurantRoute"
+import restaurantRoute from "./routes/RestaurantRoute"
 import { v2 as cloudinary } from "cloudinary"
 import bodyParser from "body-parser"
 
@@ -32,6 +33,7 @@ app.get("/helth", async (req: Request, res: Response) => {
 
 app.use("/api/my/user", myUserRoute)
 app.use("/api/my/restaurant", myRestaurantRoute)
+app.use("/api/my/restaurant", restaurantRoute)
 
 app.listen(7000, () => {
   console.log(`Server is Working on http://localhost:7000`)
