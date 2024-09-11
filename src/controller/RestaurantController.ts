@@ -7,7 +7,7 @@ const searchRestaurants = async (req: Request, res: Response) => {
 
     const searchQuery = (req.query.searchQuery as string) || ""
     const selectedCuisines = (req.query.selectedCuisines as string) || ""
-    const shortOption = (req.query.shortOption as string) || "lastUpdated"
+    const sortOption = (req.query.sortOption as string) || "lastUpdated"
     const page = parseInt(req.query.page as string) || 1
 
     let query: any = {}
@@ -48,7 +48,7 @@ const searchRestaurants = async (req: Request, res: Response) => {
     // sortOption = "lastUpdated"
 
     const restaunrants = await Restaurant.find(query)
-      .sort({ [shortOption]: 1 })
+      .sort({ [sortOption]: 1 })
       .skip(skip)
       .limit(pageSize)
       .lean()
