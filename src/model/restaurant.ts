@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose, { InferSchemaType } from "mongoose"
 
 const menuItemSchema = new mongoose.Schema({
   _id: {
@@ -15,6 +15,8 @@ const menuItemSchema = new mongoose.Schema({
     required: true,
   },
 })
+
+export type MenuItemsType = InferSchemaType<typeof menuItemSchema>
 
 const resturantSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, rfe: "User" },
