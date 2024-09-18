@@ -40,12 +40,15 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       restaurant.menuItems
     )
 
+    // console.log("this is a lineItems : ", lineItems)
+
     const session = await createSession(
       lineItems,
       "TEST_ORDER_ID",
       restaurant.deliveryPrice,
       restaurant._id.toString()
     )
+    // console.log("This is a session :==", session)
 
     if (!session.url) {
       return res.status(500).json({ message: "Error creating stripe session" })
@@ -60,10 +63,12 @@ const createLineItems = (
   checkoutSessionRequest: CheckoutSessionRequest,
   menuItems: MenuItemsType[]
 ) => {
+  // console.log("This is a menuItems =====", menuItems)
   const lineItems = checkoutSessionRequest.cartItems.map((cartItem) => {
     const menuItem = menuItems.find(
       (item) => item._id.toString() === cartItem.menuItemId.toString()
     )
+
     if (!menuItem) {
       throw new Error(`Menu item not found :${cartItem.menuItemId}`)
     }
@@ -113,6 +118,7 @@ const createSession = async (
     success_url: `${FRONTEND_URL}/order-status?success=true`,
     cancel_url: `${FRONTEND_URL}/detail/${restaurantId}?cancelled=true`,
   })
+
   return sessionData
 }
 
