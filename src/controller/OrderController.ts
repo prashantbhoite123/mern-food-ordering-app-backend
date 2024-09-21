@@ -24,6 +24,12 @@ type CheckoutSessionRequest = {
   restaurantId: string
 }
 
+const stripeWebhookHandler = (req: Request, res: Response) => {
+  console.log("RECEIVED EVENT")
+  console.log("===============")
+  console.log("event : ", req.body)
+  res.send()
+}
 export const createCheckoutSession = async (req: Request, res: Response) => {
   try {
     const checkoutSessionRequest: CheckoutSessionRequest = req.body
@@ -73,7 +79,6 @@ const createLineItems = (
   checkoutSessionRequest: CheckoutSessionRequest,
   menuItems: MenuItemsType[]
 ) => {
-  
   const lineItems = checkoutSessionRequest.cartItems.map((cartItem) => {
     const menuItem = menuItems.find(
       (item) => item._id.toString() === cartItem.menuItemId.toString()
@@ -134,4 +139,5 @@ const createSession = async (
 
 export default {
   createCheckoutSession,
+  stripeWebhookHandler,
 }
