@@ -5,7 +5,7 @@
   "main": "./src/index.ts",
   "type": "commonjs",
   "scripts": {
-    "stripe": "\"C:/Stripe/stripe_1.21.5_windows_x86_64/stripe.exe\" listen --forward-to localhost:7000/api/order/checkout/webhook",
+    "stripe": "\"C:/stripe12/stripe.exe\" listen --forward-to http://127.0.0.1:7000/api/order/checkout/webhook",
   "dev": "concurrently \"nodemon\" \"npm run stripe\"",
     "build": "npm install && npx tsc",
     "start": "node dist/index.js"

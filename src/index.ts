@@ -24,9 +24,11 @@ cloudinary.config({
 
 const app = express()
 
-app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
+
+app.use("/api/order/checkout/webhook", express.raw({ type: " */*" }))
+app.use(express.json())
 
 app.get("/helth", async (req: Request, res: Response) => {
   res.send({ message: "helth Ok !" })

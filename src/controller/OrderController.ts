@@ -5,8 +5,8 @@ import { MenuItemsType, Restaurant } from "../model/restaurant"
 import Order from "../model/Order"
 
 const STRIPE = new Stripe(process.env.STRIP_API_KEY as string)
-
 const FRONTEND_URL = process.env.FRONTEND_URL as string
+const STRIPE_ENDPOINT_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string
 
 type CheckoutSessionRequest = {
   cartItems: {
@@ -24,11 +24,35 @@ type CheckoutSessionRequest = {
   restaurantId: string
 }
 
-const stripeWebhookHandler = (req: Request, res: Response) => {
-  console.log("RECEIVED EVENT")
-  console.log("===============")
-  console.log("event : ", req.body)
-  res.send()
+const stripeWebhookHandler = async (req: Request, res: Response) => {
+  let event
+  console.log("this is  event")
+  try {
+    const sig = req.headers["stripe-signature"]
+    event = STRIPE.webhooks.constructEvent(
+      req.body,
+      sig as string,
+      STRIPE_ENDPOINT_SECRET
+    )
+  } catch (error: any) {
+    console.log(error)
+    return res.status(400).send(`Webhook error : ${error.message}`)
+  }
+
+  if (event.type === "checkout.session.completed") {
+    const order = await Order.findById(event.data.object.metadata?.orderId)
+    if (!order) {
+      return res.status(400).json({ message: "Order not found" })
+    }
+
+    order.totalAmount = event.data.object.amount_total
+
+    order.status = "paid"
+
+    await order.save()
+  }
+
+  res.status(200).send()
 }
 export const createCheckoutSession = async (req: Request, res: Response) => {
   try {
